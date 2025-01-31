@@ -4,10 +4,12 @@ const jwt = require("jsonwebtoken");
 
 const register = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
+  
   // Validate input fields
   if (!name || !email || !password || !confirmPassword) {
     return res.status(400).json({ msg: "Enter all the fields" });
   }
+ 
   // Check if password and confirm password match
   if (password !== confirmPassword) {
     return res
@@ -103,15 +105,18 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-    try {
-        // Clear the JWT token cookie
-        res.clearCookie("token");
-    
-        // Respond with the logout message
-        res.status(200).json({ msg: "Logout successful" });
-      } catch (err) {
-        res.status(500).json({ msg: "Server error", error: err });
-      }
+  try {
+    // Clear the JWT token cookie
+    res.clearCookie("token", {
+      httpOnly: true, // Ensure that cookie is also removed from the client-side
+      secure: process.env.NODE_ENV === "production", // Only clear secure cookies in production
+    });
+
+    // Respond with the logout message
+    res.status(200).json({ msg: "Logout successful" });
+  } catch (err) {
+    res.status(500).json({ msg: "Server error", error: err });
+  }
 };
 
 module.exports = {
