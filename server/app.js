@@ -1,7 +1,8 @@
 require("dotenv").config();
 const express = require("express");
+const cookieParser = require('cookie-parser');
 const cors = require("cors");
-
+const authRouter = require("./Register_Login/route/authRoute")
 
 const app = express();
 
@@ -11,8 +12,11 @@ require("./Google_SignIn_Using_MySQL/Database/conn")
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 // Routes
+app.use("/api/auth", authRouter);
+
 app.get("/", (req, res) => {
   res.send("Welcome to file ..........");
 });
