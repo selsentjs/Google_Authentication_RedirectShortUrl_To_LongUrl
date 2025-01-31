@@ -1,7 +1,45 @@
-import React from "react";
-import {NavLink} from "react-router-dom"
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const url = "http://localhost:3000/api/auth/login";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // error
+  const [error, setError] = useState("");
+
+  // navigate
+  // const navigate = useNavigate();
+
+  // form
+  const submitForm = async (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      setError("Enter all the fields");
+      return;
+    }
+    try {
+      // Send the data to the server
+      const response = await axios.post(url, {
+        email,
+        password,
+      });
+      console.log("Response:", response.data);
+     
+      // Store JWT token in localStorage
+      localStorage.setItem("authToken", response.data.token);
+     
+      // Redirect to
+      // navigate("")
+    } catch (err) {
+      setError("An error occurred during registration. Please try again.");
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <section className="vh-100" style={{ backgroundColor: "#eee" }}>
@@ -15,21 +53,23 @@ const Login = () => {
                       <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                         Login
                       </p>
-
-                      <form className="mx-1 mx-md-4">
+                      {error && <p className="text-danger">{error}</p>}
+                      <form className="mx-1 mx-md-4" onSubmit={submitForm}>
                         <div className="d-flex flex-row align-items-center mb-4">
                           <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
                           <div
                             data-mdb-input-init
                             className="form-outline flex-fill mb-0"
                           >
-                            <label className="form-label" for="form3Example3c">
+                            <label htmlFor="email" className="form-label" for="form3Example3c">
                               Email
                             </label>
                             <input
                               type="email"
                               id="form3Example3c"
                               className="form-control"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
                             />
                           </div>
                         </div>
@@ -40,22 +80,22 @@ const Login = () => {
                             data-mdb-input-init
                             className="form-outline flex-fill mb-0"
                           >
-                            <label className="form-label" for="form3Example4c">
+                            <label htmlFor="password" className="form-label" for="form3Example4c">
                               Password
                             </label>
                             <input
                               type="password"
                               id="form3Example4c"
                               className="form-control"
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
                             />
                           </div>
                         </div>
 
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button
-                            type="button"
-                            data-mdb-button-init
-                            data-mdb-ripple-init
+                            type="submit"
                             className="btn btn-primary btn-lg"
                           >
                             Login
@@ -91,7 +131,10 @@ const Login = () => {
                         <div className="text-center mt-4">
                           <p>
                             Not a Member?
-                            <NavLink to="/register" className="text-decoration-none ms-2">
+                            <NavLink
+                              to="/register"
+                              className="text-decoration-none ms-2"
+                            >
                               Register
                             </NavLink>
                           </p>

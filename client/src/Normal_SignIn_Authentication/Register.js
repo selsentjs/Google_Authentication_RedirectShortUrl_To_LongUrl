@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const url = "http://localhost:3000/api/auth/register";
 
 const Register = () => {
-  const [user, setUser] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
   // error
   const [error, setError] = useState("");
+
+  // navigate
+  const navigate = useNavigate();
 
   // form
   const submitForm = async (e) => {
@@ -28,13 +32,34 @@ const Register = () => {
     }
 
     if (password.length < 6) {
-      setError("password should be maximum 6 characters");
+      setError("password should be at least 6 characters long");
       return;
     }
 
-    const response = await axios.post(url);
-    console.log("res:", response.data);
-    setUser(response.data);
+    try {
+      // Send the data to the server
+      const response = await axios.post(url, {
+        name,
+        email,
+        password,
+        confirmPassword,
+      });
+      console.log("Response:", response.data);
+
+      // store in local storage
+      // Store JWT token in localStorage
+      localStorage.setItem("authToken", response.data.token);
+
+      setSuccessMessage("User registered successfully!");
+
+      setError(""); // Clear any previous error messages
+
+      // Navigate to login page after successful registration
+      navigate("/");
+    } catch (err) {
+      setError("An error occurred during registration. Please try again.");
+      console.error(err);
+    }
   };
 
   return (
@@ -50,6 +75,11 @@ const Register = () => {
                       <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">
                         Sign up
                       </p>
+                      {/* Error and success message */}
+                      {error && <p className="text-danger">{error}</p>}
+                      {successMessage && (
+                        <p className="text-success">{successMessage}</p>
+                      )}
 
                       <form className="mx-1 mx-md-4" onSubmit={submitForm}>
                         <div className="d-flex flex-row align-items-center mb-4">
@@ -71,9 +101,8 @@ const Register = () => {
                               id="form3Example1c"
                               className="form-control"
                               value={name}
-                              onChange={(e) => setName(e.preventDefault())}
+                              onChange={(e) => setName(e.target.value)}
                             />
-                            {error && <p>{error}</p>}
                           </div>
                         </div>
 
@@ -95,9 +124,8 @@ const Register = () => {
                               id="form3Example3c"
                               className="form-control"
                               value={email}
-                              onChange={(e) => setEmail(e.preventDefault())}
+                              onChange={(e) => setEmail(e.target.value)}
                             />
-                            {error && <p>{error}</p>}
                           </div>
                         </div>
 
@@ -119,9 +147,8 @@ const Register = () => {
                               id="form3Example4c"
                               className="form-control"
                               value={password}
-                              onChange={(e) => setPassword(e.preventDefault())}
+                              onChange={(e) => setPassword(e.target.value)}
                             />
-                            {error && <p>{error}</p>}
                           </div>
                         </div>
 
@@ -144,18 +171,15 @@ const Register = () => {
                               className="form-control"
                               value={confirmPassword}
                               onChange={(e) =>
-                                setConfirmPassword(e.preventDefault())
+                                setConfirmPassword(e.target.value)
                               }
                             />
-                            {error && <p>{error}</p>}
                           </div>
                         </div>
 
                         <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                           <button
-                            type="button"
-                            data-mdb-button-init
-                            data-mdb-ripple-init
+                            type="submit"
                             className="btn btn-primary btn-lg"
                           >
                             Register
