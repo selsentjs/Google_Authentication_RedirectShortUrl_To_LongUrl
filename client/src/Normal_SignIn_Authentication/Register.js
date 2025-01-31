@@ -90,9 +90,9 @@ const Register = () => {
                             className="form-outline flex-fill mb-0"
                           >
                             <label
-                              htmlFor="name"
+                              
                               className="form-label"
-                              for="form3Example1c"
+                              htmlFor="form3Example1c"
                             >
                               Name
                             </label>
@@ -113,9 +113,9 @@ const Register = () => {
                             className="form-outline flex-fill mb-0"
                           >
                             <label
-                              htmlFor="email"
+                              
                               className="form-label"
-                              for="form3Example3c"
+                              htmlFor="form3Example3c"
                             >
                               Email
                             </label>
@@ -135,10 +135,9 @@ const Register = () => {
                             data-mdb-input-init
                             className="form-outline flex-fill mb-0"
                           >
-                            <label
-                              htmlFor="password"
+                            <label 
                               className="form-label"
-                              for="form3Example4c"
+                              htmlFor="form3Example4c"
                             >
                               Password
                             </label>
@@ -159,9 +158,9 @@ const Register = () => {
                             className="form-outline flex-fill mb-0"
                           >
                             <label
-                              htmlFor="confirmPassword"
+                              
                               className="form-label"
-                              for="form3Example4cd"
+                              htmlFor="form3Example4cd"
                             >
                               Confirm password
                             </label>
