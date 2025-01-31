@@ -12,7 +12,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   // navigate
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // form
   const submitForm = async (e) => {
@@ -29,12 +29,12 @@ const Login = () => {
         password,
       });
       console.log("Response:", response.data);
-     
+
       // Store JWT token in localStorage
       localStorage.setItem("authToken", response.data.token);
-     
-      // Redirect to
-      // navigate("")
+
+      // Redirect to dashboard
+      navigate("/dashboard");
     } catch (err) {
       setError("An error occurred during registration. Please try again.");
       console.error(err);
@@ -44,15 +44,19 @@ const Login = () => {
   // handle success login for google
   const handleLoginSuccess = async (response) => {
     const token = response.credential;
-    
+
     try {
       // Send the Google token to your backend for verification and user authentication
-      const res = await axios.post("http://localhost:3000/api/auth/google", { token });
-  
+      const res = await axios.post("http://localhost:3000/api/auth/google", {
+        token,
+      });
+
       if (res.status === 200) {
         console.log("User authenticated:", res.data);
         // You can now store the JWT token received from your own backend in localStorage
         localStorage.setItem("authToken", res.data.token);
+        // Navigate to the dashboard
+        navigate("/dashboard");
       } else {
         setError(res.data.message);
       }
@@ -83,7 +87,10 @@ const Login = () => {
                             data-mdb-input-init
                             className="form-outline flex-fill mb-0"
                           >
-                            <label className="form-label" htmlFor="form3Example3c">
+                            <label
+                              className="form-label"
+                              htmlFor="form3Example3c"
+                            >
                               Email
                             </label>
                             <input
@@ -102,7 +109,10 @@ const Login = () => {
                             data-mdb-input-init
                             className="form-outline flex-fill mb-0"
                           >
-                            <label className="form-label" htmlFor="form3Example4c">
+                            <label
+                              className="form-label"
+                              htmlFor="form3Example4c"
+                            >
                               Password
                             </label>
                             <input
@@ -129,8 +139,10 @@ const Login = () => {
                           <p>Or Sign in With</p>
                           <GoogleLogin
                             onSuccess={handleLoginSuccess}
-                            onError={(error) => console.log("Google login error: ", error)}
-                            useOneTap 
+                            onError={(error) =>
+                              console.log("Google login error: ", error)
+                            }
+                            useOneTap
                           >
                             <button className="google-login-btn">
                               <svg
@@ -151,7 +163,10 @@ const Login = () => {
                         <div className="text-center mt-4">
                           <p>
                             Not a Member?
-                            <NavLink to="/register" className="text-decoration-none ms-2">
+                            <NavLink
+                              to="/register"
+                              className="text-decoration-none ms-2"
+                            >
                               Register
                             </NavLink>
                           </p>
