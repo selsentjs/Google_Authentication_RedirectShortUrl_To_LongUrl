@@ -74,3 +74,5 @@ function swaggerDocs(app, port) {
 }
 
 module.exports = swaggerDocs;
+
+// how to run: http://localhost:3000/api-docs/
