@@ -5,7 +5,7 @@ const cors = require("cors");
 const authRouter = require("./Register_Login/route/authRoute")
 const googleSignInRouter = require("./Google_SignIn_Using_MySQL/route/googleSignInRoute")
 const shortUrlRouter = require("./createShortenUrl/route/analysisRoute")
-
+const swaggerDocs = require('./swagger');
 const app = express();
 
 // database
@@ -27,7 +27,8 @@ app.get("/", (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 5000
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+const port = process.env.PORT;
+app.listen(port, () => {
+  console.log(`server is running on port ${port}`);
+  swaggerDocs(app,port)
 });
