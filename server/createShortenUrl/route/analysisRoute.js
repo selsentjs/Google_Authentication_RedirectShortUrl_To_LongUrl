@@ -21,9 +21,13 @@ const router = express.Router();
 // error 429 Too Many Requests (that is shortenUrlLimiter works)
 router.post("/createShortUrl", shortenUrlLimiter, shortenURL);
 router.get("/redirectLongUrl/:alias", redirectToLongUrl);
+
 router.get("/analyseUserDetails/:alias", analyseUserDetails);
+
 router.get("/getAnalytics/:alias", getAnalytics);
+
 router.get("/analytics/:alias", getUrlAnalyticsAPI);
+
 router.get("/analytics/topic/:topic",analysisTopic);
 
 module.exports = router;

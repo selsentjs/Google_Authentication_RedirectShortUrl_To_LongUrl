@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-
+import UserClickDetails from "./UserClickDetails";
 
 const createShortUrl = "http://localhost:3000/api/createShortUrl";
 
@@ -18,18 +18,17 @@ const ShortUrlAndAnalytics = () => {
   const [alias, setAlias] = useState(""); // Alias is used for fetching analytics
   const [loading, setLoading] = useState(false); // Track loading state for analytics
 
-  
   // Fetch analytics based on alias
   const fetchAnalytics = async (e) => {
-    e.preventDefault()
-    const token = localStorage.getItem("googleAuthToken"); 
-    console.log("getToken:",localStorage.getItem("googleAuthToken"));
+    e.preventDefault();
+    const token = localStorage.getItem("googleAuthToken");
+    console.log("getToken:", localStorage.getItem("googleAuthToken"));
 
     if (!token) {
-        setError("Google token not found.");
-        return;
-      }
-    
+      setError("Google token not found.");
+      return;
+    }
+
     if (!alias) {
       setError("Please enter a valid alias.");
       return;
@@ -51,7 +50,7 @@ const ShortUrlAndAnalytics = () => {
         setData([]); // Clear data if no analytics found
         setError("No analytics data available.");
       }
-      setLoading(false); 
+      setLoading(false);
     } catch (err) {
       setLoading(false); // Stop loading in case of error
       console.error("Error fetching analytics:", err);
@@ -99,7 +98,7 @@ const ShortUrlAndAnalytics = () => {
       setError("Error creating shortened URL.");
       console.error(err);
     }
-  };  
+  };
 
   return (
     <div className="container mt-5">
@@ -183,7 +182,6 @@ const ShortUrlAndAnalytics = () => {
               Submit
             </button>
           </form>
-           
         </div>
       </div>
 
@@ -248,6 +246,15 @@ const ShortUrlAndAnalytics = () => {
           <p>No analytics data available.</p>
         )}
       </div>
+      {/*Topic section*/}
+      <UserClickDetails
+        topic={topic}
+        setTopic={setTopic}
+        error={error}
+        setError={setError}
+        loading={loading}
+        setLoading={setLoading}
+      />
     </div>
   );
 };
