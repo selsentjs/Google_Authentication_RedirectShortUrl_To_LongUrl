@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
+const path = require('path');
+
 const authRouter = require("./Register_Login/route/authRoute")
 const googleSignInRouter = require("./Google_SignIn_Using_MySQL/route/googleSignInRoute")
 const shortUrlRouter = require("./createShortenUrl/route/analysisRoute")
@@ -15,7 +17,7 @@ require("./Google_SignIn_Using_MySQL/Database/conn")
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-
+app.use(express.static(path.join(__dirname + "/public")));
 // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/auth/google",googleSignInRouter)
