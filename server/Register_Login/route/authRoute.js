@@ -36,18 +36,18 @@ const verifyToken = require("../../middleware/verifyToken");
 /**
  * @swagger
  * /api/auth/register:
- *  post:
- *    summary: Register a user
- *    tags: [Auth]
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/Register'
- *    responses:
+ *   post:
+ *     summary: Register a user
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Register'
+ *     responses:
  *       201:
- *        description: User registered successfully
+ *         description: User registered successfully
  *       400:
  *         description: Bad Request
  *       500:
@@ -58,25 +58,25 @@ router.post("/register", register);
 /**
  * @swagger
  * /api/auth/login:
- *  post:
- *    summary: User login
- *    tags: [Auth]
- *    requestBody:
- *      required: true
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/Login'
- *    responses:
-         201:
+ *   post:
+ *     summary: User login
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Login'
+ *     responses:
+ *       201:
  *         description: Login successful
  *       400:
  *         description: Invalid credentials
  *       500:
  *         description: Internal Server Error
  */
-
 router.post("/login", login);
+
 /**
  * @swagger
  * /api/auth/logout:
@@ -84,12 +84,13 @@ router.post("/login", login);
  *     summary: User logout
  *     tags: [Auth]
  *     responses:
-  *       200:
+ *       200:
  *         description: Logout successful
  *       500:
  *         description: Internal Server Error
  */
 router.get("/logout", logout);
+
 /**
  * @swagger
  * /api/auth/profile:
@@ -128,6 +129,6 @@ router.get("/logout", logout);
  */
 router.get("/profile", verifyToken, (req, res) => {
     res.json({ msg: "Welcome to your profile", user: req.user });
-  });
-  
+});
+
 module.exports = router;
