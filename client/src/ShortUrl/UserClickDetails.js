@@ -29,7 +29,7 @@ const UserClickDetails = ({
     setLoading(true); // Start loading
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/analytics/topic/${topic}`,
+        `https://google-authentication-redirectshorturl-voed.onrender.com/api/analytics/topic/${topic}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Include the token in the request header
