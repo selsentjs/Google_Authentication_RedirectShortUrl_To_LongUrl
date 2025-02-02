@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
-const url = "http://localhost:3000/api/auth/login";
+const url = "https://google-authentication-redirectshorturl-voed.onrender.com/api/auth/login";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -47,7 +47,7 @@ const Login = () => {
 
     try {
       // Send the Google token to your backend for verification and user authentication
-      const res = await axios.post("http://localhost:3000/api/auth/google", {
+      const res = await axios.post("https://google-authentication-redirectshorturl-voed.onrender.com/api/auth/google", {
         token,
       });
 
