@@ -14,10 +14,13 @@ const app = express();
 require("./Google_SignIn_Using_MySQL/Database/conn")
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3001",
+  credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname + "/public")));
+
 // Routes
 app.use("/api/auth", authRouter);
 app.use("/api/auth/google",googleSignInRouter)
@@ -34,3 +37,10 @@ app.listen(port, () => {
   console.log(`server is running on port ${port}`);
   swaggerDocs(app,port)
 });
+
+/*
+Render deploy:
+=============
+backend url: https://google-authentication-redirectshorturl-voed.onrender.com/
+frontend url: https://frontend-a0qx.onrender.com/
+*/

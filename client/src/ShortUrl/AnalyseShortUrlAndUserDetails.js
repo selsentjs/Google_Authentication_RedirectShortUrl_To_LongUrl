@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import UserClickDetails from "./UserClickDetails";
 
-const createShortUrl = "https://google-authentication-redirectshorturl-voed.onrender.com/api/createShortUrl";
+const createShortUrl = "http://localhost:3000/api/createShortUrl";
 
 const ShortUrlAndAnalytics = () => {
   // States for creating short URL
@@ -37,7 +37,7 @@ const ShortUrlAndAnalytics = () => {
     setLoading(true); // Start loading
     try {
       const response = await axios.get(
-        `https://google-authentication-redirectshorturl-voed.onrender.com/api/getAnalytics/${alias}`,
+        `http://localhost:3000/api/getAnalytics/${alias}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Include the token in the request header
@@ -88,7 +88,7 @@ const ShortUrlAndAnalytics = () => {
       });
 
       const alias = response.data.shortUrl.split("/").pop(); // Extract alias from the response
-      const redirectUrl = `https://google-authentication-redirectshorturl-voed.onrender.com/api/redirectLongUrl/${alias}`;
+      const redirectUrl = `http://localhost:3000/api/redirectLongUrl/${alias}`;
 
       // Set the generated shortUrl from the backend response
       setShortUrl(redirectUrl);

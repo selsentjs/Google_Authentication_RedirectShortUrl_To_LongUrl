@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const url = "https://google-authentication-redirectshorturl-voed.onrender.com/api/auth/register";
+const url = "http://localhost:3000/api/auth/register";
 
 const Register = () => {
   const [name, setName] = useState("");
